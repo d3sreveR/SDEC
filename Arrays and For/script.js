@@ -12,12 +12,12 @@ for (let i = 0; i <= 100; i++) {
 
 // Largest number in the array
 
-let array = [3, 6, 2, 56, 32, 5, 89, 32];
-let largest = 0;
+let array = [3 , 6, 2, 56, 32, 5, 89, 32];
+let largest= 0;
 
-for (i = 0; i <= largest; i++) {
-    if (array[i] > largest) {
-        let largest = array[i];
+for (i=0; i<=largest;i++){
+    if (array[i]>largest) {
+        largest=array[i];
     }
 }
 console.log(largest)
