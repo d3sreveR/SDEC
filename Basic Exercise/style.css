@@ -1,0 +1,37 @@
+*{
+    margin: 0;
+}
+
+body {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    color: white;
+}
+
+.block{
+    margin: 10px;
+    padding: 10px;
+    border: cornflowerblue 1px solid;
+}
+
+.block button{
+    margin-top: 5px;
+}
+
+.succes{
+    margin: 10px;
+    padding: 10px;
+    border: rgb(0, 255, 42) 2px solid;
+}
+
+.fail {
+    margin: 10px;
+    padding: 10px;
+    border: #D30212 2px solid;
+}
+
+#loggedAcc {
+    margin-top: 5px;
+}
