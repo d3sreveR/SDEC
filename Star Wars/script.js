@@ -1,54 +1,246 @@
-<!DOCTYPE html>
-<html>
+// getting all html elements
 
-<head>
-    <link rel="stylesheet" href="style.css">
-    <title>Star Wars</title>
-</head>
+let robot = document.getElementById("robot");
+let ship = document.getElementById("rocket");
+let buttonPrevRobot = document.getElementById("prevRobot");
+let buttonNextRobot = document.getElementById("nextRobot");
+let buttonPrevShip = document.getElementById("prevShip");
+let buttonNextShip = document.getElementById("nextShip");
+let tableRobot = document.getElementById("tableRobot");
+let tableRocket = document.getElementById("tableRocket");
+let loader = document.getElementById("loader");
 
-<body>
-    <div>
 
-        <div class="logoDiv" id="logoDiv">
-            <!-- logo -->
-            <img src="Images\logo.png" width="500px">
-        </div>
+//
+let num = 1;
+let num2 = 1;
 
-        <div class="imageDiv" id="imageDiv">
-            <!-- robot and rocket clickable image -->
-            <img src="Images\robot.svg" width="200px" id="robot">
-            <img src="Images\rocket.svg" width="200px" id="rocket">
-        </div>
-        <div>
-            <img src="Images\loader3.gif" id="loader">
-        </div>
-        <div class="tableDiv" id="tableDiv">
-            <table id="tableRobot" border="1px">
-            </table>
-            <table id="tableRocket" border="1px">
-            </table>
-        </div>
+// url's
+let peopleUrl = "https://swapi.co/api/people/?page=";
+let shipsUrl = "https://swapi.co/api/starships/?page=";
 
-        <div class="buttonsDiv" id="buttonsDiv">
-            <!-- buttons for navigating trough the pages -->
-            <button id="prevRobot"> Previous </button>
-            <button id="nextRobot"> Next </button>
-            <button id="prevShip"> Previous </button>
-            <button id="nextShip"> Next </button>
-        </div>
+// hiding elements that we dont need at the begining
 
-        <div class="paginationR" id="paginationR">
-           
+buttonPrevRobot.style.display = "none";
+buttonNextRobot.style.display = "none";
+buttonPrevShip.style.display = "none";
+buttonNextShip.style.display = "none";
+tableRobot.style.display = "none";
+tableRocket.style.display = "none";
+loader.style.display = "none";
 
-        </div>
-        <div class="paginationS" id="paginationS">
-            
+let data = [];
 
-        </div>
+// Robot event listener
 
-    </div>
+robot.addEventListener("click", function display() {
+    
+    tableRobot.innerHTML = ""
+    tableRobot.style.display = "block";
+    async function getPeopleData() {
+        loader.style.display = "block";
+        let response = await fetch(`${peopleUrl}1`);
+        let pData = await response.json();
+        data = pData.results;
+        data.forEach(item => {
+            tableRobot.innerHTML += `
+                <tr>
+                    <td> ${item.name} </td>
+                    <td> ${item.height} </td>
+                    <td> ${item.mass} </td>
+                    <td> ${item.birth_year} </td>
+                    <td> ${item.gender} </td>
+                    <td> ${item.films.length} </td>
+                </tr>
+            `
+        });
+        loader.style.display = "none";
+    }
+    getPeopleData();
+    buttonPrevRobot.style.display = "none";
+    buttonNextRobot.style.display = "block";
+    buttonPrevShip.style.display = "none";
+    buttonNextShip.style.display = "none";
+})
 
-    <script src="script.js"></script>
-</body>
+// Ship event listener
 
-</html>
+ship.addEventListener("click", function display() {
+    buttonPrevRobot.style.display = "none";
+    buttonNextRobot.style.display = "none";
+    buttonNextShip.style.display = "block";
+    tableRocket.innerHTML = ""
+    tableRocket.style.display = "block";
+    tableRobot.style.display = "none";
+    async function getPeopleData() {
+        loader.style.display = "block";
+        let response = await fetch(`${shipsUrl}1`);
+        let pData = await response.json();
+        data = pData.results;
+        data.forEach(item => {
+            tableRocket.innerHTML += `
+                <tr>
+                    <td> ${item.name} </td>
+                    <td> ${item.model} </td>
+                    <td> ${item.manufacturer} </td>
+                    <td> ${item.cost_in_credits} </td>
+                    <td> ${item.passengers} </td>
+                    <td> ${item.starship_class} </td>
+                </tr>
+            `
+        });
+        loader.style.display = "none";
+    }
+    getPeopleData();
+
+})
+
+// Next button Robot
+
+
+buttonNextRobot.addEventListener("click", function() {
+    
+    num++
+
+    // if(num=9) {buttonNextRobot.style.display = "none";}
+
+    tableRobot.innerHTML = ""
+    tableRobot.style.display = "block";
+    tableRocket.style.display = "none";
+    async function getPeopleData() {
+        loader.style.display = "block";
+        let response = await fetch(`${peopleUrl}${num}`);
+        let pData = await response.json();
+        data = pData.results;
+        data.forEach(item => {
+            tableRobot.innerHTML += `
+                <tr>
+                    <td> ${item.name} </td>
+                    <td> ${item.height} </td>
+                    <td> ${item.mass} </td>
+                    <td> ${item.birth_year} </td>
+                    <td> ${item.gender} </td>
+                    <td> ${item.films.length} </td>
+                </tr>
+            `
+        });
+        loader.style.display = "none";
+    }
+    getPeopleData();
+    buttonPrevRobot.style.display = "block";
+    buttonPrevShip.style.display = "none";
+    buttonNextShip.style.display = "none"
+})
+
+
+// Previous button Robot
+
+buttonPrevRobot.addEventListener("click", function() {
+    num--;
+
+    // if(num=1) {buttonPrevRobot.style.display = "none";}
+
+    tableRobot.innerHTML = ""
+    tableRobot.style.display = "block";
+    tableRocket.style.display = "none";
+    async function getPeopleData() {
+        loader.style.display = "block";
+        let response = await fetch(`${peopleUrl}${num}`);
+        let pData = await response.json();
+        data = pData.results;
+        data.forEach(item => {
+            tableRobot.innerHTML += `
+                <tr>
+                    <td> ${item.name} </td>
+                    <td> ${item.height} </td>
+                    <td> ${item.mass} </td>
+                    <td> ${item.birth_year} </td>
+                    <td> ${item.gender} </td>
+                    <td> ${item.films.length} </td>
+                </tr>
+            `
+        });
+        loader.style.display = "none";
+    }
+    getPeopleData();
+    buttonNextRobot.style.display = "block";
+    buttonPrevShip.style.display = "none";
+    buttonNextShip.style.display = "none"
+})
+
+
+// Next button Ships
+
+
+
+buttonNextShip.addEventListener("click", function() {
+
+    num2++;
+
+    buttonPrevRobot.style.display = "none";
+    buttonNextRobot.style.display = "none";
+    buttonNextShip.style.display = "block";
+    buttonPrevShip.style.display = "block";
+    tableRocket.innerHTML = ""
+    tableRocket.style.display = "block";
+    tableRobot.style.display = "none";
+    async function getPeopleData() {
+        loader.style.display = "block";
+        let response = await fetch(`${shipsUrl}${num2}`);
+        let pData = await response.json();
+        data = pData.results;
+        data.forEach(item => {
+            tableRocket.innerHTML += `
+                <tr>
+                    <td> ${item.name} </td>
+                    <td> ${item.model} </td>
+                    <td> ${item.manufacturer} </td>
+                    <td> ${item.cost_in_credits} </td>
+                    <td> ${item.passengers} </td>
+                    <td> ${item.starship_class} </td>
+                </tr>
+            `
+        });
+        loader.style.display = "none";
+    }
+    getPeopleData();
+
+})
+
+// Button Previous Ship
+
+buttonPrevShip.addEventListener("click", function() {
+
+    num2--;
+
+    buttonPrevRobot.style.display = "none";
+    buttonNextRobot.style.display = "none";
+    buttonNextShip.style.display = "block";
+    tableRocket.innerHTML = ""
+    tableRocket.style.display = "block";
+    tableRobot.style.display = "none";
+    async function getPeopleData() {
+        loader.style.display = "block";
+        let response = await fetch(`${shipsUrl}${num2}`);
+        let pData = await response.json();
+        data = pData.results;
+        data.forEach(item => {
+            tableRocket.innerHTML += `
+                <tr>
+                    <td> ${item.name} </td>
+                    <td> ${item.model} </td>
+                    <td> ${item.manufacturer} </td>
+                    <td> ${item.cost_in_credits} </td>
+                    <td> ${item.passengers} </td>
+                    <td> ${item.starship_class} </td>
+                </tr>
+            `
+        });
+        loader.style.display = "none";
+    }
+    getPeopleData();
+
+})
+
+//===============================================\\
+//==================PAGINATION===================\\
